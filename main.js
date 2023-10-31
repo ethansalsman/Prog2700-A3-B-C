@@ -16,10 +16,22 @@
 
         //1 - Create a function called getGuntherCount() which returns the total number of episodes 
         // where the character Gunther is mentioned in the episode summary.
+        function getGuntherCount(json) {
+            const episodes = json._embedded.episodes;
+            // . filter episodes searching for Gunther
+            const guntherEpisodes = episodes.filter(episode => episode.summary.includes('Gunther'));
+            return guntherEpisodes.length;
+        }
+        
         console.log('--------------------------------');
         console.log(`Gunther Count: ${getGuntherCount(json)}`);
 
         //2 - Create a function called getTotalRuntimeMinutes() that totals all runtime minutes for all episodes
+        function getTotalRuntimeMinutes(json) {
+            const episodes = json._embedded.episodes;
+            const totalRuntime = episodes.reduce((total, episode) => total + episode.runtime, 0);
+            return totalRuntime;
+        }
         console.log('--------------------------------');
         console.log(`Total Runtime Minutes: ${getTotalRuntimeMinutes(json)}`);
 
