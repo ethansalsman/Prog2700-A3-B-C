@@ -121,22 +121,106 @@
         console.log(getFirstFourSeasons(json));
 
         //9 - Create a function called getEpisodeTallyBySeason that returns an object containing the season name and the total episodes as key:value pairs for each season
+        function getEpisodeTallyBySeason(json) {
+            const episodes = json._embedded.episodes;
+            // filter through episodes and assign them to seasons
+            const seasons = episodes.map(episode => episode.season);
+            // assign them to an array
+            const seasonsArray = [...new Set(seasons)];
+            // assign them to an object
+            const seasonsObject = {};
+            // loop through seasons and assign them to an object
+            seasonsArray.forEach(season => {
+                seasonsObject[season] = episodes.filter(episode => episode.season === season).length;
+            });
+            return seasonsObject;
+        }
         console.log('--------------------------------');
         console.log(`Tally of episodes by season:`);
         console.log(getEpisodeTallyBySeason(json));
 
         //10 - Create a funtion called capitalizeTheFriends that transforms the episode JSON data by capitalizing the words Joey, Chandler, Monica, Rachel, Phoebe, and Ross in both 
         //the name and summary of the episodes.
-        console.log('--------------------------------');
-        console.log('Capitalized Friends');
-        console.log(capitalizeTheFriends(json));
+        function capitalizeTheFriends(json) {
+            const episodes = json._embedded.episodes;
+            // loop through episodes and capitalize the names
+            const capitalizedEpisodes = episodes.map((episode) => {
+                episode.name = episode.name
+                    .replace("Joey", "JOEY")
+                    .replace("Chandler", "CHANDLER")
+                    .replace("Monica", "MONICA")
+                    .replace("Rachel", "RACHEL")
+                    .replace("Phoebe", "PHOEBE")
+                    .replace("Ross", "ROSS");
+                episode.summary = episode.summary
+                    .replace("Joey", "JOEY")
+                    .replace("Chandler", "CHANDLER")
+                    .replace("Monica", "MONICA")
+                    .replace("Rachel", "RACHEL")
+                    .replace("Phoebe", "PHOEBE")
+                    .replace("Ross", "ROSS");
+                return episode;
+            });
+            console.log("--------------------------------");
+            console.log("Capitalized Friends");
+            console.log(capitalizedEpisodes);
+            return capitalizedEpisodes;
+        }
 
-    })
+        
+        capitalizeTheFriends(json);
 
+    
+    })();
 	// COMPLETE THE FOLLOWING FUNCTIONS BY IMPLEMENTING MAP, REDUCE, OR FILTER 
 	// (or a combination) ON THE PROVIDED JSON DATA
 
 	// Define the required ten functions below this line...
 
+
+    // 1 filters through episode wiht the dot method to find the string Gunther.
+        // this is done by using .includes foollowed by the desrired string
+
+    // 2 reduce the total runtime minutes for all episodes  
+        //  .reduce to add the total runtime minutes
+        // by using dot method to access the runtime minutes thorugh the episodes.
+
+    // 3 filter through airdate and assining year to 2000
+        // this is done by using .includes followed by the desired year wich will be assigned as a string
+    
+    // 4 access cast members
+         // access members then gender and assign the gender to female
+         // then map them t an array
+
+    // 5 string is included and then will be assinged to ursula
+     // filter through episodes and assign them to ursula
+        // then map them to an array
+
+    // 6 finter through cast members and then through age 
+        // assign them to over 55
+        // then map them to an array
+
+    // 7 filter through episodes and exclude season 6
+        // then map them to an array
+        // then add them together using .reduce for the total runtime.
+
+    // 8 filter through episodes and assign them to first four seasons
+        // then map them to an array
+        // then display them as a JSON object
+
+    // 9 filter through episodes and assign them to seasons
+        // then assign them to an array
+        // then assign them to an object
+        // loop through seasons and assign them to an object
+
+    // 10 loop through episodes and capitalize the names
+        // then display them as a JSON object
+        // repeat the same process for the summary
+
+
+
+
 })();
+
+
 
