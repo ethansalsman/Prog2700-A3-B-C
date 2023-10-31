@@ -36,10 +36,22 @@
         console.log(`Total Runtime Minutes: ${getTotalRuntimeMinutes(json)}`);
 
         //3 - Create a function called getDateRangeEpisodeCount() that returns the number of episodes that aired in the year 2000
+        function getTotalEpisodesInYear(json, year) {
+            const episodes = json._embedded.episodes;
+            // filter through airdate and assing year to 2000
+            const totalEpisodes = episodes.filter(episode => episode.airdate.includes(year));
+            return totalEpisodes.length;
+        }
         console.log('--------------------------------');
         console.log(`Total episodes airing in year 2000: ${getTotalEpisodesInYear(json, "2000")}`);
 
         //4 - Create a function called getFemaleCastMembers() that returns an array of the names of the female cast members.
+        function getFemaleCastMembers(json) {
+            const cast = json._embedded.cast;
+            const femaleCast = cast.filter(member => member.person.gender === 'Female');
+            const femaleCastNames = femaleCast.map(member => member.person.name);
+            return femaleCastNames;
+        }
         console.log('--------------------------------');
         console.log(`Female Cast Members:`);
         console.log(getFemaleCastMembers(json));
