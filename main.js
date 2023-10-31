@@ -88,11 +88,34 @@
 
         //7 - Create a function called getTotalRuntimeMinutesExcludingSeasonSix that gets the total 
         //    runtime minutes for all episodes excluding episodes in season 6
+        function getTotalRuntimeMinutesExcludingSeasonSix(json) {
+            const episodes = json._embedded.episodes;
+            // filter through episodes and exclude season 6
+            const episodesExcludingSeasonSix = episodes.filter(episode => episode.season !== 6);
+            // assign them to an array
+            const episodesExcludingSeasonSixRuntime = episodesExcludingSeasonSix.map(episode => episode.runtime);
+            // add them together
+            const totalRuntime = episodesExcludingSeasonSixRuntime.reduce((total, episode) => total + episode, 0);
+            return totalRuntime;
+        }
         console.log('--------------------------------');
         console.log(`Total runtime in minutes excluding Season 6: ${getTotalRuntimeMinutesExcludingSeasonSix(json)}`);
     
         //8 - Create a function called getFirstFourSeasons that gets the episodes for the first four seasons 
         //    but only return an array of JSON objects containing the season number and episode name
+        function getFirstFourSeasons(json) {
+            const episodes = json._embedded.episodes;
+            // filter through episodes and assign them to first four seasons
+            const firstFourSeasons = episodes.filter(episode => episode.season <= 4);
+            // assign them to an array
+            const firstFourSeasonsJSON = firstFourSeasons.map(episode => {
+                return {
+                    season: episode.season,
+                    name: episode.name
+                }
+            });
+            return firstFourSeasonsJSON;
+        }
         console.log('--------------------------------');
         console.log(`Episode JSON for first four seasons:`)
         console.log(getFirstFourSeasons(json));
