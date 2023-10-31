@@ -38,7 +38,7 @@
         //3 - Create a function called getDateRangeEpisodeCount() that returns the number of episodes that aired in the year 2000
         function getTotalEpisodesInYear(json, year) {
             const episodes = json._embedded.episodes;
-            // filter through airdate and assing year to 2000
+            // filter through airdate and assining year to 2000
             const totalEpisodes = episodes.filter(episode => episode.airdate.includes(year));
             return totalEpisodes.length;
         }
@@ -47,8 +47,11 @@
 
         //4 - Create a function called getFemaleCastMembers() that returns an array of the names of the female cast members.
         function getFemaleCastMembers(json) {
+            // access cast members
             const cast = json._embedded.cast;
+            // access female cast members
             const femaleCast = cast.filter(member => member.person.gender === 'Female');
+            //assign them to an array
             const femaleCastNames = femaleCast.map(member => member.person.name);
             return femaleCastNames;
         }
@@ -58,12 +61,27 @@
 
         //5 - Create a function called getEpisodeTitles() which returns a list of episode
         //    where the argument string is found in the episode summary.
+        function getEpisodeTitles(json, string) {
+            // string is included and then will be assinged to ursula
+            const episodes = json._embedded.episodes;
+            const matchingEpisodes = episodes.filter(episode => episode.summary.includes(string));
+            const matchingEpisodeTitles = matchingEpisodes.map(episode => episode.name);
+            return matchingEpisodeTitles;
+        }
         console.log('--------------------------------');
         console.log(`Episodes that mention Ursula:`);
         console.log(getEpisodeTitles(json, 'Ursula'));
 
         //6 - Create a function called getCastMembersOver55() which returns a list of cast members
         //    who are currently older than 55 years of age.
+        function getCastMembersOver55(json) {
+            const cast = json._embedded.cast;
+            // finter through cast members and assign them to over 55
+            const castMembersOver55 = cast.filter(member => member.person.age > 55);
+            // assign them to an array
+            const castMembersOver55Names = castMembersOver55.map(member => member.person.name);
+            return castMembersOver55Names;
+        } 
         console.log('--------------------------------');
         console.log(`Cast Members over 55:`);
         console.log(getCastMembersOver55(json));
