@@ -32,10 +32,44 @@
 
         // display the canadian aircraft on the map in the partC.html file
         // use the custom icon created above
-        // use the rotation angle and origin to rotate the icon based on the heading of the aircraft
-        
+    // fetch flight data from OpenSky Network API and filter by country code "CA" for Canada
 
 
-        
+    // transform the canadianAircraft data into GeoJSON format
+    let features = canadianAircraft.map(aircraft => {
+        // gather the data from the aircraft array
+        let lat = aircraft[6];
+        let lon = aircraft[5];
+        let altitude = aircraft[7];
+        let callsign = aircraft[1];
+        // return the GeoJSON feature
+        return {
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                // convert the coordinates to GeoJSON format: [longitude, latitude]
+                coordinates: [lon, lat]
+            },
+            properties: {
+                // include the altitude and callsign as properties
+                altitude: altitude,
+                callsign: callsign
+            }
+        };
+    });
+    // create a GeoJSON feature collection
+    let geoJson = {
+        type: 'FeatureCollection',
+        features: features
+    };
+    // log the GeoJSON feature collection
+    console.log(geoJson);
+
+    // add the GeoJSON feature collection to the map
+    L.geoJSON(geoJson).addTo(map);
+    
+
+
+
         
 })()
