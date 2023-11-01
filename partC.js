@@ -13,13 +13,7 @@
         .bindPopup('This is a sample popup. You can put any html structure in this including extra flight data. You can also swap this icon out for a custom icon. Some png files have been provided for you to use if you wish.')
         .openPopup();
 
-    //create a custom icon
-    let myIcon = L.icon({
-        iconUrl: 'images/plane4-45.png',
-        iconSize: [30, 30],
-        iconAnchor: [15, 15],
-        popupAnchor: [0, -15]
-    });
+    
 
     // fetch flight data from OpenSky Network API and filter by country code "CA" for Canada
     fetch('https://opensky-network.org/api/states/all')
@@ -31,7 +25,7 @@
         .catch(error => console.error(error));
 
         // display the canadian aircraft on the map in the partC.html file
-        // use the custom icon created above
+       
     // fetch flight data from OpenSky Network API and filter by country code "CA" for Canada
 
 
@@ -67,7 +61,6 @@
 
     // add the GeoJSON feature collection to the map
     L.geoJSON(geoJson).addTo(map);
-    
     map.eachLayer(layer => {
         if (layer instanceof L.Marker) {
             map.removeLayer(layer);
@@ -112,14 +105,7 @@
             // log the GeoJSON feature collection
             console.log(geoJson);
 
-            // remove existing markers from the map
-            map.eachLayer(layer => {
-                if (layer instanceof L.Marker) {
-                    map.removeLayer(layer);
-                }
-            });
-
-            // add the new markers to the map
+            // add the GeoJSON feature collection to the map
             L.geoJSON(geoJson, {
                 pointToLayer: function(feature, latlng) {
                     return L.marker(latlng, {icon: myIcon});
@@ -135,7 +121,9 @@
     // fetch the aircraft data initially
     fetchAircraftData();
 
-    // fetch the aircraft data every 5 minutes and update the map
-    setInterval(fetchAircraftData, 5 * 60 * 1000);  
+        
 
-})();   // end IIFE
+    
+    // close the IIFE   
+}
+)();

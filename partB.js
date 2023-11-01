@@ -171,7 +171,7 @@
         capitalizeTheFriends(json);
 
     
-    })();
+    });
 	// COMPLETE THE FOLLOWING FUNCTIONS BY IMPLEMENTING MAP, REDUCE, OR FILTER 
 	// (or a combination) ON THE PROVIDED JSON DATA
 
@@ -215,7 +215,7 @@
 
     // 10 loop through episodes and capitalize the names
         // then display them as a JSON object
-        // repeat the same process for the summary
+        // repeat the sumarry process
 
 
 
