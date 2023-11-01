@@ -30,4 +30,12 @@
         })
         .catch(error => console.error(error));
 
+        // display the canadian aircraft on the map in the partC.html file
+        // use the custom icon created above
+        // use the rotation angle and origin to rotate the icon based on the heading of the aircraft
+        
+
+
+        
+        
 })()
