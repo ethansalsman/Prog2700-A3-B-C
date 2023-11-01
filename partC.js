@@ -68,8 +68,74 @@
     // add the GeoJSON feature collection to the map
     L.geoJSON(geoJson).addTo(map);
     
+    map.eachLayer(layer => {
+        if (layer instanceof L.Marker) {
+            map.removeLayer(layer);
+        }
+    });
 
+    // add the new markers to the map
+    function fetchAircraftData() {
+        fetch('https://opensky-network.org/api/states/all')
+        .then(response => response.json())
+        .then(data => {
+            let canadianAircraft = data.states.filter(aircraft => aircraft[2] === "CA");
+            console.log(canadianAircraft);
 
+            // transform the canadianAircraft data into GeoJSON format
+            let features = canadianAircraft.map(aircraft => {
+                // gather the data from the aircraft array
+                let lat = aircraft[6];
+                let lon = aircraft[5];
+                let altitude = aircraft[7];
+                let callsign = aircraft[1];
+                // return the GeoJSON feature
+                return {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        // convert the coordinates to GeoJSON format: [longitude, latitude]
+                        coordinates: [lon, lat]
+                    },
+                    properties: {
+                        // include the altitude and callsign as properties
+                        altitude: altitude,
+                        callsign: callsign
+                    }
+                };
+            });
+            // create a GeoJSON feature collection
+            let geoJson = {
+                type: 'FeatureCollection',
+                features: features
+            };
+            // log the GeoJSON feature collection
+            console.log(geoJson);
 
-        
-})()
+            // remove existing markers from the map
+            map.eachLayer(layer => {
+                if (layer instanceof L.Marker) {
+                    map.removeLayer(layer);
+                }
+            });
+
+            // add the new markers to the map
+            L.geoJSON(geoJson, {
+                pointToLayer: function(feature, latlng) {
+                    return L.marker(latlng, {icon: myIcon});
+                },
+                onEachFeature: function(feature, layer) {
+                    layer.bindPopup(`Altitude: ${feature.properties.altitude} ft<br>Callsign: ${feature.properties.callsign}`);
+                }
+            }).addTo(map);
+        })
+        .catch(error => console.error(error));
+    }
+
+    // fetch the aircraft data initially
+    fetchAircraftData();
+
+    // fetch the aircraft data every 5 minutes and update the map
+    setInterval(fetchAircraftData, 5 * 60 * 1000);  
+
+})();   // end IIFE
